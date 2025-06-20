@@ -3,7 +3,7 @@
 Plugin Name: Urvanov Syntax Highlighter
 Plugin URI: https://github.com/urvanov-ru/crayon-syntax-highlighter
 Description: Supports multiple languages, themes, highlighting from a URL, local file or post text.
-Version: 2.8.37
+Version: 2.8.40
 Author: Fedor Urvanov, Aram Kocharyan
 Author URI: https://urvanov.ru
 Text Domain: urvanov-syntax-highlighter
@@ -34,8 +34,8 @@ if (URVANOV_SYNTAX_HIGHLIGHTER_THEME_EDITOR) {
 require_once('class-urvanov-syntax-highlighter-wp.php');
 
 Urvanov_Syntax_Highlighter_Global::set_info(array(
-	'Version' => '2.8.37',
-	'Date' => '31th August 2024',
+	'Version' => '2.8.40',
+	'Date' => '12th June 2025',
 	'AuthorName' => 'Fedor Urvanov & Aram Kocharyan',
 	'PluginURI' => 'https://github.com/urvanov-ru/crayon-syntax-highlighter',
 ));
@@ -690,11 +690,6 @@ class Urvanov_Syntax_Highlighter_Plugin {
             return $the_content;
         }
 
-        global $post;
-
-        // Go through queued posts and find crayons
-        $post_id = strval($post->ID);
-
         if (self::$is_excerpt) {
             UrvanovSyntaxHighlighterLog::debug('excerpt');
             if (Urvanov_Syntax_Highlighter_Global_Settings::val(Urvanov_Syntax_Highlighter_Settings::EXCERPT_STRIP)) {
@@ -705,6 +700,11 @@ class Urvanov_Syntax_Highlighter_Plugin {
             // Otherwise Crayon remains with ID and replaced later
             return $the_content;
         }
+
+        global $post;
+        
+        // Go through queued posts and find crayons
+        $post_id = strval($post->ID);
 
         // Find if this post has Crayons
         if (array_key_exists($post_id, self::$post_queue)) {
@@ -1038,11 +1038,6 @@ class Urvanov_Syntax_Highlighter_Plugin {
         }
     }
 
-    public static function init($request) {
-        UrvanovSyntaxHighlighterLog::debug('init');
-        Urvanov_Syntax_Highlighter_Global::load_plugin_textdomain();
-    }
-
     public static function init_ajax() {
         add_action('wp_ajax_urvanov-syntax-highlighter-tag-editor', 'UrvanovSyntaxHighlighterTagEditorWP::content');
         add_action('wp_ajax_nopriv_urvanov-syntax-highlighter-tag-editor', 'UrvanovSyntaxHighlighterTagEditorWP::content');
@@ -1345,7 +1340,9 @@ if (defined('ABSPATH')) {
     if (!is_admin()) {
         // Filters and Actions
 
-        add_filter('init', 'Urvanov_Syntax_Highlighter_Plugin::init');
+	// XXX add_filter('init', 'Urvanov_Syntax_Highlighter_Plugin::init');
+	// XXX moved load_textdomain to after_setup_theme, so that it loads after init as it is required in WP 6.7
+	add_filter('init', 'Urvanov_Syntax_Highlighter_Global::load_plugin_textdomain');
 
         Urvanov_Syntax_Highlighter_Settings_WP::load_settings(TRUE);
         if (Urvanov_Syntax_Highlighter_Global_Settings::val(Urvanov_Syntax_Highlighter_Settings::MAIN_QUERY)) {

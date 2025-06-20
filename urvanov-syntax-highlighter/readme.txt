@@ -3,9 +3,9 @@ Contributors: urvanov
 Donate link: https://yoomoney.ru/to/41001288941320
 License: GPLv3 or later
 Tags: syntax highlighter, syntax, highlighter, highlighting, crayon, code highlighter, bbpress
-Requires at least: 6.6
-Tested up to: 6.6.1
-Stable tag: 2.8.36
+Requires at least: 6.7
+Tested up to: 6.8.1
+Stable tag: 2.8.37
 
 Reincarnation of Crayon Syntax Highlighter. Syntax Highlighter supporting multiple languages, themes, fonts, highlighting from a URL, or post text.
 
@@ -15,7 +15,7 @@ Reincarnation of Crayon Syntax Highlighter. Somewhere in documentation and in UI
 
 Use special Urvanov Syntax Highlighter block in new posts. Don't use standard Code block.
 
-How to use the plugin:
+<a href = "https://www.youtube.com/watch?v=2aBtVJOOqqA">Watch how to use the plugin</a>:
 
 https://www.youtube.com/watch?v=2aBtVJOOqqA
 
@@ -333,7 +333,20 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 
 == Changelog ==
 
-= 2.8.???????????????????????????????? =
+= 2.8.40 =
+* FIXED
+    * Fixed broken settings after 2.8.39
+
+= 2.8.39 =
+* FIXED
+    * Fixed 'Translations loaded too early error' notice. (https://wordpress.org/support/topic/translations-loaded-too-early-error/)
+
+= 2.8.38 =
+* FIXED
+    * moved load_textdomain to after_setup_theme, so that it loads after in…
+    * Fix warning in the_content function
+
+= 2.8.37 =
 * FIXED
     * Warning message. PHP Deprecated: pathinfo(): Passing null to parameter #1 (https://wordpress.org/support/topic/passing-null-to-string-warning/)
     * Warning message. Trying to get property 'comment_ID' of non-object (https://wordpress.org/support/topic/comment_id-error/).
